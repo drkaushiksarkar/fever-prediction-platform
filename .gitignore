@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+outputs/
+data/raw/
+tuner_results/
+*.h5
+*.keras
+.DS_Store
