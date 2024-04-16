@@ -1,0 +1,24 @@
+name: Deploy
+on:
+  push:
+    tags: ["v*"]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[serve]"
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+          aws-region: us-east-1
+      - run: |
+          docker build -t fever-platform:${{ github.ref_name }} .
+          aws ecr get-login-password | docker login --username AWS --password-stdin ${{ secrets.ECR_URI }}
+          docker push ${{ secrets.ECR_URI }}/fever-platform:${{ github.ref_name }}
