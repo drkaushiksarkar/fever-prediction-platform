@@ -1,0 +1,24 @@
+data:
+  raw_data_path: data/raw
+  processed_data_path: data/processed
+  population_floor: 3000
+  train_ratio: 0.7
+  validation_ratio: 0.15
+
+model:
+  lstm_units_1: 128
+  lstm_units_2: 64
+  attention_heads: 4
+  embed_size: 64
+  dropout_rate: 0.3
+  learning_rate: 0.001
+  batch_size: 32
+  epochs: 100
+  early_stopping_patience: 15
+  sequence_length: 12
+  target_variable: TPR
+
+output_dir: outputs
+experiment_name: fever_prediction_v1
+seed: 42
+use_mixed_precision: true
